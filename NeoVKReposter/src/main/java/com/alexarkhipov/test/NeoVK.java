@@ -37,20 +37,23 @@ public class NeoVK {
 
 	public NeoVK(String url, String accesstoken, String ownerid) {
 		this(url, accesstoken, ownerid, false);
-	}
-
-	public NeoVK(String url, String accesstoken, String ownerid, String services, boolean test) {
-		logger.debug("{} constructor is called", this.getClass().getName());
-		this.test = test;
-		data = new HashMap<>();
-		this.url = url;
-		setAssessToken(accesstoken);
-		setOwnerId(ownerid);
-		setServices(services);
+		logger.debug("{} constructor 1 is called", this.getClass().getName());
 	}
 
 	public NeoVK(String url, String accesstoken, String ownerid, boolean test) {
 		this(url, accesstoken, ownerid, "", test);
+		logger.debug("{} constructor 2 is called", this.getClass().getName());
+	}
+
+	public NeoVK(String url, String accesstoken, String ownerid, String services, boolean test) {
+		logger.debug("{} constructor 3 is called", this.getClass().getName());
+		this.test = test;
+		data = new HashMap<>();
+		this.url = url;
+		logger.debug(LOG_MESSAGE, "URL", url);
+		setAssessToken(accesstoken);
+		setOwnerId(ownerid);
+		setServices(services);
 	}
 
 	public void setServices(String s) {
@@ -110,6 +113,7 @@ public class NeoVK {
 		List<NameValuePair> params = new ArrayList<>(data.size());
 		for (Map.Entry<String, String> entry : data.entrySet()) {
 			if (!entry.getValue().isEmpty()) {
+				logger.debug("Values added: {} : {}", entry.getKey(), entry.getValue());
 				params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
 			}
 		}

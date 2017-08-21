@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.javacodegeeks.examples.logbackexample.beans" level="INFO" additivity="false">
+    <logger name="com.alexarkhipov" level="DEBUG" additivity="false">
             <appender-ref ref="STDOUT" />
     </logger>
 

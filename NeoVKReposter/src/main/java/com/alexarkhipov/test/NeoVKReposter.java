@@ -37,7 +37,8 @@ public class NeoVKReposter {
 	@Autowired
 	@Bean
 	public NeoVK neoVK(@Value("${app.vk.url}") String url, @Value("${app.vk.access_token}") String accesstoken,
-			@Value("${app.vk.owner_id}") String ownerid, @Value("${neo.test}") Boolean test) {
+			@Value("${app.vk.owner_id}") String ownerid, @Value("${app.vk.services}") String services,
+			@Value("${neo.test}") Boolean test) {
 		return new NeoVK(url, accesstoken, ownerid, test);
 	}
 

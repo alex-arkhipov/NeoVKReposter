@@ -1,7 +1,8 @@
 package com.alexarkhipov.test;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -89,23 +92,22 @@ public class NeoVK {
 
 		setMessage(content);
 
-		try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-			HttpPost httppost = new HttpPost(url);
-
-			List<NameValuePair> params = makeParams();
-			httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-			// Execute and get the response.
-			HttpResponse response = httpclient.execute(httppost);
-
-			HttpEntity entity = response.getEntity();
-
-			if (entity != null) {
-				InputStream instream = entity.getContent();
-				logger.info("Response received - {} bytes", instream.available());
-			}
-		} catch (IOException ex1) {
-			logger.error("Error: {}", ex1.getMessage());
+		String response = sendRequest();
+		Integer postId;
+		try {
+			postId = getPostId(response);
+			logger.info("Posted successfully. Post ID = {}", postId);
+		} catch (JSONException e) {
+			logger.error("Something wrong occured during posting. Cannot parse json object: {}.", response);
+			logger.error(e.getMessage());
 		}
+
+	}
+
+	private int getPostId(String json) throws JSONException {
+		JSONObject obj = new JSONObject(json);
+		return obj.getJSONObject("response").getInt("post_id");
+
 	}
 
 	private List<NameValuePair> makeParams() {
@@ -118,6 +120,36 @@ public class NeoVK {
 			}
 		}
 		return params;
+	}
+
+	private String sendRequest() {
+		StringBuilder s = new StringBuilder();
+		try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+			HttpPost httppost = new HttpPost(url);
+
+			List<NameValuePair> params = makeParams();
+			httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+			// Execute and get the response.
+			HttpResponse response = httpclient.execute(httppost);
+
+			HttpEntity entity = response.getEntity();
+
+			if (entity != null) {
+				InputStreamReader in = new InputStreamReader(entity.getContent());
+				BufferedReader br = new BufferedReader(in);
+				String line;
+				s = new StringBuilder();
+				while ((line = br.readLine()) != null) {
+					s.append(line);
+				}
+				br.close();
+				logger.info("Response received - {} bytes: {}", s.length(), s);
+			}
+		} catch (IOException ex1) {
+			logger.error("Error: {}", ex1.getMessage());
+		}
+
+		return s.toString();
 	}
 
 }

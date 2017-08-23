@@ -28,7 +28,7 @@ public class TestApplicationConfiguration {
 	@Autowired
 	@Bean
 	public NeoStorage neoStorage(String storageFile) {
-		return new NeoFileStorage(storageFile);
+		return new NeoFileStorage(storageFile, false);
 	}
 
 	@Autowired

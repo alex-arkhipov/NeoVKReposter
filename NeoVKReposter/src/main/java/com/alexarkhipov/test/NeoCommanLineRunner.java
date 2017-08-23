@@ -51,7 +51,7 @@ public class NeoCommanLineRunner implements CommandLineRunner {
 
 			newPosts = neoPostManager.getUnpublishedPosts(lastPubTitle);
 		} catch (Exception ex) {
-			logger.error("Cannot connect to get feed: {}", ex.getClass());
+			logger.error("Cannot connect to get feed: {}", ex.getMessage());
 		}
 
 		if (newPosts == null || newPosts.isEmpty()) {

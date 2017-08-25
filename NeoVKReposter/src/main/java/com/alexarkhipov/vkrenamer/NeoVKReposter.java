@@ -1,4 +1,4 @@
-package com.alexarkhipov.test;
+package com.alexarkhipov.vkrenamer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class NeoVKReposter {
 
 	@Autowired
 	@Bean
-	public Boolean test(@Value("${neo.test}") Boolean test) {
+	public Boolean test(@Value("${app.vk.test}") Boolean test) {
 		return test;
 	}
 
@@ -43,8 +43,7 @@ public class NeoVKReposter {
 	@Autowired
 	@Bean
 	public NeoVK neoVK(@Value("${app.vk.url}") String url, @Value("${app.vk.access_token}") String accesstoken,
-			@Value("${app.vk.owner_id}") String ownerid, @Value("${app.vk.services}") String services,
-			@Value("${app.vk.test}") Boolean test) {
+			@Value("${app.vk.owner_id}") String ownerid, @Value("${app.vk.services}") String services, Boolean test) {
 		return new NeoVK(url, accesstoken, ownerid, services, test);
 	}
 

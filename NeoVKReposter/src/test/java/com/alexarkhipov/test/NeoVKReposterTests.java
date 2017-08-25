@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.alexarkhipov.vkrenamer.NeoManagePost;
+import com.alexarkhipov.vkrenamer.NeoPost;
+import com.alexarkhipov.vkrenamer.NeoStorage;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplicationConfiguration.class)
 public class NeoVKReposterTests {

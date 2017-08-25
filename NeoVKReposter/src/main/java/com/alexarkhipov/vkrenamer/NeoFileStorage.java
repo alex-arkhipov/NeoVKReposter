@@ -1,10 +1,11 @@
 /**
  * 
  */
-package com.alexarkhipov.test;
+package com.alexarkhipov.vkrenamer;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -12,6 +13,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,6 +93,15 @@ public class NeoFileStorage implements NeoStorage {
 	@Override
 	public void savePost(NeoPost post) {
 		String fn = getWriteFilename();
+
+		// Make backup file
+		String fnBak = fn + ".bak";
+		try {
+			Files.copy(new File(fn).toPath(), new File(fnBak).toPath(), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			logger.error("Backup ({}) creation fails. Error: {}", fnBak, e.getMessage());
+		}
+
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fn), "utf-8"))) {
 
 			writer.write(post.getTitle());

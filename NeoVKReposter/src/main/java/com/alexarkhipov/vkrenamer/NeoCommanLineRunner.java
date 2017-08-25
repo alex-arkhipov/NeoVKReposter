@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.alexarkhipov.test;
+package com.alexarkhipov.vkrenamer;
 
 import java.util.List;
 

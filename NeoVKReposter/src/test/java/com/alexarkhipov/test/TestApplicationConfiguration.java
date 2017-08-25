@@ -10,6 +10,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Profile;
 
+import com.alexarkhipov.vkrenamer.NeoFileStorage;
+import com.alexarkhipov.vkrenamer.NeoPostManager;
+import com.alexarkhipov.vkrenamer.NeoPostRetriever;
+import com.alexarkhipov.vkrenamer.NeoRssParser;
+import com.alexarkhipov.vkrenamer.NeoStorage;
+import com.alexarkhipov.vkrenamer.NeoVK;
+import com.alexarkhipov.vkrenamer.NeoVKReposter;
+
 @Configuration
 @ComponentScan(excludeFilters = {
 		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CommandLineRunner.class),

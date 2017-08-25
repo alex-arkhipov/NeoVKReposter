@@ -1,4 +1,4 @@
-package com.alexarkhipov.test;
+package com.alexarkhipov.vkrenamer;
 
 import java.io.InputStream;
 import java.net.URL;

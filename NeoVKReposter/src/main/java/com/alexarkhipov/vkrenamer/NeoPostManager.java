@@ -1,4 +1,4 @@
-package com.alexarkhipov.test;
+package com.alexarkhipov.vkrenamer;
 
 import java.util.ArrayList;
 import java.util.Collections;
